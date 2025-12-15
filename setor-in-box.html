@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setor.in Box - Tukar Sampah Jadi Poin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #A8D5BA 0%, #81C995 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #E8E8E8;
+            padding: 16px 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+
+        .header-back {
+            width: 40px;
+            height: 40px;
+            background: #A8D5BA;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            flex: 1;
+            text-align: center;
+        }
+
+        .promo-box {
+            background: #2D8659;
+            color: white;
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .promo-box h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .promo-box p {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .locations-section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #333;
+        }
+
+        .location-item {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .location-item:hover {
+            border-color: #2D8659;
+            box-shadow: 0 4px 12px rgba(45, 134, 89, 0.2);
+        }
+
+        .location-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .location-address {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .location-arrow {
+            float: right;
+            color: #2D8659;
+            font-size: 20px;
+            margin-top: -24px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        .modal-header {
+            background: #E8E8E8;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .modal-back {
+            width: 40px;
+            height: 40px;
+            background: #A8D5BA;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Added map placeholder container */
+        .map-placeholder {
+            width: 100%;
+            height: 300px;
+            background: #E8F4F8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #999;
+            border-bottom: 1px solid #ddd;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .map-placeholder::before {
+            position: absolute;
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .distance-badge {
+            display: inline-block;
+            background: #2D8659;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .detail-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .detail-address {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #2D8659;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #245044;
+        }
+
+        .btn-secondary {
+            background: #E8E8E8;
+            color: #333;
+            border: 2px solid #2D8659;
+        }
+
+        .btn-secondary:hover {
+            background: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <button class="header-back" onclick="window.history.back()">←</button>
+            <div class="header-title">Setor.in Box</div>
+            <div style="width: 40px;"></div>
+        </div>
+
+        <!-- Promo Box -->
+        <div class="promo-box">
+            <h2>Setor.in</h2>
+            <p><strong>Redeem</strong> your points to E-Wallet</p>
+        </div>
+
+        <!-- Locations Section -->
+        <div class="locations-section">
+            <h3>Lokasi Penukaran</h3>
+            
+            <div class="location-item" onclick="openDetail('institut')">
+                <div class="location-arrow"></div>
+                <div class="location-title">Institut Teknologi PLN</div>
+                <div class="location-address">Menara PLN, Jl. Outer Ring Road Lantai 2, RT.1/RW.1, Duri Kosambi, Kecamatan Cengkarang, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11750</div>
+            </div>
+
+            <div class="location-item" onclick="openDetail('pln-uid')">
+                <div class="location-arrow"></div>
+                <div class="location-title">PLN UID Jakarta Raya</div>
+                <div class="location-address">Jl. M.I. Ridwan Rais No.17, RT.7/RW.1, Gambir, Kecamatan Gambir, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10110</div>
+            </div>
+
+            <div class="location-item" onclick="openDetail('kantor-pusat')">
+                <div class="location-arrow"></div>
+                <div class="location-title">Kantor Pusat PT PLN (Persero)</div>
+                <div class="location-address">Jl. Trunojoyo Blok M-1 No.135, RT.6/RW.2, Melawi, Kec. Kby. Baru, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12160</div>
+            </div>
+
+            <div class="location-item" onclick="openDetail('pln-up3')">
+                <div class="location-arrow"></div>
+                <div class="location-title">PLN UP3 Cengkarang</div>
+                <div class="location-address">Jl. Raya Pondok Randu No.19, RT.3/RW.2, Duri Kosambi, Kecamatan Cengkarang, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11750</div>
+            </div>
+
+            <div class="location-item" onclick="openDetail('tpst')">
+                <div class="location-arrow"></div>
+                <div class="location-title">TPST Bantar Gebang</div>
+                <div class="location-address">Kelurahan Ciketing Udik, Kelurahan Cikiwul dan Kelurahan Sumur Batu, Kecamatan Bantargebang Kota Bekasi</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Modal -->
+    <div class="modal" id="detailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="modal-back" onclick="closeDetail()">←</button>
+                <div class="modal-title" id="modalTitle">Detail Lokasi</div>
+            </div>
+
+            <!-- Map placeholder container for user to add image -->
+            <div class="map-placeholder" id="mapPlaceholder"></div>
+
+            <div class="modal-body">
+                <div class="distance-badge" id="distanceBadge">+ 0km</div>
+                
+                <div class="detail-title" id="detailTitle">Nama Lokasi</div>
+                <div class="detail-address" id="detailAddress">Alamat lengkap akan tampil di sini</div>
+
+                <!-- Added Maps button alongside existing button -->
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="openMaps()">📍 MAPS</button>
+                    <button class="btn btn-primary" onclick="closeDetail()">TUKAR SEKARANG</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const locations = {
+            institut: {
+                title: 'Institut Teknologi PLN',
+                address: 'Menara PLN, Jl. Outer Ring Road Lantai 2, RT.1/RW.1, Duri Kosambi, Kecamatan Cengkarang, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11750',
+                distance: '700m',
+                imageMap: 'assets/gedungitpln.jpeg', // GANTI DENGAN: assets/nama-gambar-anda.png
+                mapsLink: 'https://maps.google.com/?q=Institut+Teknologi+PLN+Jakarta' // GANTI DENGAN LINK GOOGLE MAPS ANDA
+            },
+            'pln-uid': {
+                title: 'PLN UID Jakarta Raya',
+                address: 'Jl. M.I. Ridwan Rais No.17, RT.7/RW.1, Gambir, Kecamatan Gambir, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10110',
+                distance: '19km',
+                imageMap: 'assets/gedungplnuidjkt.jpg', // GANTI DENGAN: assets/nama-gambar-anda.png
+                mapsLink: 'https://maps.google.com/?q=PLN+UID+Jakarta+Raya' // GANTI DENGAN LINK GOOGLE MAPS ANDA
+            },
+            'kantor-pusat': {
+                title: 'Kantor Pusat PT PLN (Persero)',
+                address: 'Jl. Trunojoyo Blok M-1 No.135, RT.6/RW.2, Melawi, Kec. Kby. Baru, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12160',
+                distance: '22km',
+                imageMap: 'assets/gedungpusatpln.jpeg', // GANTI DENGAN: assets/nama-gambar-anda.png
+                mapsLink: 'https://maps.app.goo.gl/KCiEEXtZis3zMiUE8' // GANTI DENGAN LINK GOOGLE MAPS ANDA
+            },
+            'pln-up3': {
+                title: 'PLN UP3 Cengkarang',
+                address: 'Jl. Raya Pondok Randu No.19, RT.3/RW.2, Duri Kosambi, Kecamatan Cengkarang, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11750',
+                distance: '1,9km',
+                imageMap: 'assets/gedungup3cgk.jpg', // GANTI DENGAN: assets/nama-gambar-anda.png
+                mapsLink: 'https://maps.app.goo.gl/c4WRPcTMmJCb8Nd27' // GANTI DENGAN LINK GOOGLE MAPS ANDA
+            },
+            tpst: {
+                title: 'TPST Bantar Gebang',
+                address: 'Kelurahan Ciketing Udik, Kelurahan Cikiwul dan Kelurahan Sumur Batu, Kecamatan Bantargebang Kota Bekasi',
+                distance: '56km',
+                imageMap: 'assets/tpstbangeb.jpg', // GANTI DENGAN: assets/nama-gambar-anda.png
+                mapsLink: 'https://maps.google.com/?q=TPST+Bantar+Gebang' // GANTI DENGAN LINK GOOGLE MAPS ANDA
+            }
+        };
+
+        let currentLocationKey = null;
+
+        function openDetail(key) {
+            currentLocationKey = key;
+            const location = locations[key];
+            document.getElementById('modalTitle').textContent = location.title;
+            document.getElementById('detailTitle').textContent = location.title;
+            document.getElementById('detailAddress').textContent = location.address;
+            document.getElementById('distanceBadge').textContent = '+ ' + location.distance;
+            
+            const mapPlaceholder = document.getElementById('mapPlaceholder');
+            mapPlaceholder.innerHTML = `<img src="${location.imageMap}" alt="Peta ${location.title}" onerror="this.alt='Gambar peta tidak ditemukan'">`;
+            
+            document.getElementById('detailModal').classList.add('active');
+        }
+
+        function closeDetail() {
+            document.getElementById('detailModal').classList.remove('active');
+            currentLocationKey = null;
+        }
+
+        function openMaps() {
+            if (currentLocationKey && locations[currentLocationKey]) {
+                window.open(locations[currentLocationKey].mapsLink, '_blank');
+            }
+        }
+
+        // Close modal on background click
+        document.getElementById('detailModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDetail();
+            }
+        });
+    </script>
+</body>
+</html>

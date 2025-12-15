@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redeem Setor.in Points</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #e9f5e9 0%, #d4e8d4 100%);
+            min-height: 100vh;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .container { max-width: 500px; margin: 0 auto; padding: 0 20px; }
+        .header {
+            background: white; border-radius: 15px; padding: 15px 20px;
+            display: flex; align-items: center; gap: 15px; margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .back-btn {
+            background: #ddd; border: none; width: 40px; height: 40px;
+            border-radius: 50%; cursor: pointer; font-size: 20px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .header h1 { font-size: 22px; font-weight: bold; color: #1a1a1a; flex: 1; }
+
+        .points-balance {
+            background: linear-gradient(90deg, #38a169 0%, #2d8659 100%); 
+            color: white; border-radius: 12px; padding: 15px;
+            text-align: center; margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(30, 122, 46, 0.3);
+        }
+        .points-balance p { font-size: 14px; opacity: 0.8; margin-bottom: 5px; }
+        .points-balance h2 { font-size: 30px; font-weight: 700; }
+
+        .section-title {
+            font-size: 16px; color: #1f2937; font-weight: bold; margin-bottom: 15px;
+        }
+        
+        .redeem-option {
+            background: white; border-radius: 12px; margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            display: flex; align-items: center; gap: 15px;
+            padding: 20px; cursor: pointer; transition: transform 0.2s;
+        }
+        .redeem-option:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); }
+        
+        .option-icon { font-size: 32px; flex-shrink: 0; }
+        .option-info { flex: 1; }
+        .option-info h3 { font-size: 18px; color: #1a1a1a; margin-bottom: 4px; }
+        .option-info p { font-size: 13px; color: #666; }
+        .option-arrow { font-size: 20px; color: #999; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="back-btn" onclick="window.history.back()">←</button>
+            <h1>Redeem Points</h1>
+        </div>
+
+        <div class="points-balance">
+            <p>Saldo Setor.in Points Anda:</p>
+            <h2>500.000</h2>
+        </div>
+
+        <div class="section-title">Pilih Opsi Penukaran</div>
+
+        <div class="redeem-option" onclick="window.location.href='redeem-bank.html'">
+            <div class="option-icon">🏦</div>
+            <div class="option-info">
+                <h3>Tarik Dana (Cash Out)</h3>
+                <p>Tukarkan Points Anda langsung ke rekening bank pribadi Anda.</p>
+            </div>
+            <div class="option-arrow">›</div>
+        </div>
+
+        <div class="redeem-option" onclick="window.location.href='redeem-voucher.html'"> 
+            <div class="option-icon">🎁</div>
+            <div class="option-info">
+                <h3>Tukar Hadiah & Voucher</h3>
+                <p>Tukarkan Points dengan diskon, pulsa, atau hadiah menarik lainnya.</p>
+            </div>
+            <div class="option-arrow">›</div>
+        </div>
+    </div>
+</body>
+</html>

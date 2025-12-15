@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Setor.in</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f7fcf7 0%, #e9f5e9 100%); 
+            min-height: 100vh;
+            padding: 20px 0 0;
+        }
+        .container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 0 16px; 
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e7a2e;
+        }
+        .logout-btn {
+            background: #e34c4c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .logout-btn:hover {
+            background: #b93737;
+        }
+
+        /* Statistik Card */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+            border-left: 5px solid #38a169;
+        }
+        .stat-card .label {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: 800;
+            color: #1f2937;
+        }
+        /* Menu Group */
+        .menu-group {
+            background: white;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        .menu-group h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e7a2e;
+            padding: 15px 16px;
+            background: #d4f0dd;
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 16px;
+            text-decoration: none;
+            color: #1f2937;
+            border-top: 1px solid #e5e7eb;
+            transition: background-color 0.2s;
+        }
+        .menu-group .menu-item:first-of-type {
+            border-top: none;
+        }
+        .menu-item:hover {
+            background-color: #f7fcf7;
+        }
+        .menu-item-icon {
+            font-size: 20px;
+            width: 30px;
+            flex-shrink: 0;
+            margin-right: 15px;
+            color: #38a169;
+        }
+        .menu-item-text {
+            flex-grow: 1;
+            font-size: 15px;
+        }
+        .menu-item-arrow {
+            font-size: 16px;
+            color: #9ca3af;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Admin Setor.in</h1>
+            <button class="logout-btn" onclick="window.location.href='admin-login.html'">Logout</button>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="label">Total Transaksi (Bulan Ini)</div>
+                <div class="value">124</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Sampah Didaur Ulang (Total)</div>
+                <div class="value">4.5 Tonn</div>
+            </div>
+        </div>
+
+        <div class="menu-group">
+            <h4>Manajemen Data Sampah (Kelola Sistem)</h4>
+            <a href="admin-kelola-jenis.html" class="menu-item">
+                <span class="menu-item-icon">🗑️</span>
+                <span class="menu-item-text">Kelola Jenis Sampah & Satuan</span>
+                <span class="menu-item-arrow">›</span>
+            </a>
+            <a href="admin-kelola-harga.html" class="menu-item">
+                <span class="menu-item-icon">💰</span>
+                <span class="menu-item-text">Kelola Harga Konversi Poin</span>
+                <span class="menu-item-arrow">›</span>
+            </a>
+        </div>
+        
+        <div class="menu-group">
+            <h4>Manajemen Pengguna & Transaksi</h4>
+            <a href="admin-validasi-user.html" class="menu-item">
+                <span class="menu-item-icon">👤</span>
+                <span class="menu-item-text">Validasi Data User & Mitra</span>
+                <span class="menu-item-arrow">›</span>
+            </a>
+            <a href="admin-riwayat-transaksi.html" class="menu-item">
+                <span class="menu-item-icon">📜</span>
+                <span class="menu-item-text">Riwayat Transaksi Drop Off</span>
+                <span class="menu-item-arrow">›</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

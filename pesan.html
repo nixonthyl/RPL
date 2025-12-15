@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesan - Setor.in</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #e9f5e9 0%, #d4e8d4 100%); 
+            min-height: 100vh;
+            padding: 0; 
+        }
+
+        .container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 0 16px; 
+        }
+
+        /* --- Header Halaman --- */
+        .page-header {
+            padding: 20px 0 10px 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e7a2e;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        /* --- Message List Item --- */
+        .message-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #e5e7eb;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .message-item:first-of-type {
+            border-top: 1px solid #e5e7eb; /* Border di atas item pertama */
+        }
+
+        .message-item:hover {
+            background-color: #f7fcf7;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            background: #d4f0dd; /* Warna default avatar */
+            color: #1e7a2e;
+            flex-shrink: 0;
+            margin-right: 15px;
+        }
+
+        .message-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3px;
+        }
+
+        .sender-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .timestamp {
+            font-size: 12px;
+            color: #9ca3af;
+            flex-shrink: 0;
+            margin-left: 10px;
+        }
+
+        .message-snippet {
+            font-size: 13px;
+            color: #6b7280;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* Highlight pesan yang belum dibaca */
+        .message-unread .sender-name,
+        .message-unread .message-snippet {
+            font-weight: 700;
+            color: #1e7a2e;
+        }
+        
+        .message-unread .avatar {
+            border: 2px solid #1e7a2e;
+        }
+
+        /* --- Empty State / No Messages --- */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #6b7280;
+            background: white;
+            border-radius: 16px;
+            margin-top: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .empty-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+            color: #d4e8d4;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #1f2937;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+        }
+
+
+        /* --- Bottom Navigation (dari Dashboard) --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0; 
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            padding: 12px 0; 
+            display: flex;
+            justify-content: space-around; 
+            align-items: center;
+            width: 100%; 
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        
+        .nav-item {
+            flex: 1; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+            color: #9ca3af; 
+            font-size: 11px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-item.active {
+            color: #1e7a2e;
+        }
+
+        .nav-icon {
+            font-size: 22px;
+        }
+
+        .main-content {
+            padding-bottom: 80px; 
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding-left: 16px; /* Padding kiri-kanan untuk list pesan */
+            padding-right: 16px; 
+        }
+
+        /* Media Query for mobile screen optimization */
+        @media (max-width: 450px) {
+            .container {
+                padding: 0; 
+            }
+            .page-header {
+                margin: 0 16px;
+            }
+            .main-content {
+                margin-left: 16px;
+                margin-right: 16px;
+                padding-left: 16px; 
+                padding-right: 16px; 
+            }
+            .empty-state {
+                margin-top: 0; /* Rapikan tampilan empty state di HP */
+                border-radius: 0;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="page-header">Pesan</h2>
+
+        <div class="main-content">
+            <a href="#" class="message-item message-unread">
+                <div class="avatar">💬</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="sender-name">Customer Service Setor.in</span>
+                        <span class="timestamp">Baru</span>
+                    </div>
+                    <p class="message-snippet">Poin Anda sudah masuk. Total 500.000 Points!</p>
+                </div>
+            </a>
+            
+            <a href="#" class="message-item">
+                <div class="avatar">⚙️</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="sender-name">Sistem Notifikasi</span>
+                        <span class="timestamp">1 hari lalu</span>
+                    </div>
+                    <p class="message-snippet">Drop Off #SET-20251128-001 Anda sudah Selesai.</p>
+                </div>
+            </a>
+
+            <a href="#" class="message-item">
+                <div class="avatar">♻️</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="sender-name">Pengumuman</span>
+                        <span class="timestamp">2 hari lalu</span>
+                    </div>
+                    <p class="message-snippet">Telah hadir Setor.in Box di lokasi baru!</p>
+                </div>
+            </a>
+            
+            </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="dashboard.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="pesanan.html" class="nav-item">
+            <span class="nav-icon">📋</span>
+            <span>Pesanan</span>
+        </a>
+        <a href="#" class="nav-item" onclick="alert('Gallery - Coming Soon!')">
+            <span class="nav-icon">📸</span>
+            <span>Gallery</span>
+        </a>
+        <a href="pesan.html" class="nav-item active">
+            <span class="nav-icon">💬</span>
+            <span>Pesan</span>
+        </a>
+        <a href="akun.html" class="nav-item">
+            <span class="nav-icon">👤</span>
+            <span>Akun</span>
+        </a>
+    </div>
+    
+    <script>
+        // Set Navigasi Bottom menjadi aktif di halaman Pesan
+        document.addEventListener('DOMContentLoaded', () => {
+            // Memastikan item navigasi yang sesuai dengan halaman ini aktif
+            document.querySelector('.bottom-nav a[href="pesan.html"]').classList.add('active');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Jenis Sampah & Satuan - Admin</title>
+    <style>
+        /* Menggunakan style yang mirip dengan akun.html/alamat.html */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #e9f5e9 0%, #d4e8d4 100%); 
+            min-height: 100vh;
+            padding: 0; 
+        }
+        .container { max-width: 450px; margin: 0 auto; padding: 0 16px; }
+        .page-header {
+            padding: 20px 0 10px 0;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e7a2e;
+            text-align: center;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .back-btn {
+            font-size: 24px;
+            color: #4b5563;
+            text-decoration: none;
+            margin-right: 40px;
+        }
+        .page-title { flex-grow: 1; text-align: center; margin-left: -39px; }
+        
+        /* Kartu Konten */
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-left: 16px; 
+            margin-right: 16px; 
+        }
+        
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #38a169;
+            margin-bottom: 15px;
+        }
+
+        .category-header h3 {
+            font-size: 16px;
+            color: #1f2937;
+        }
+
+        .add-btn {
+            background: #38a169;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .waste-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .waste-item:last-child { border-bottom: none; }
+
+        .waste-info {
+            font-size: 14px;
+            color: #1f2937;
+            font-weight: 600;
+            flex-grow: 1;
+        }
+        
+        .waste-info small {
+            display: block;
+            font-size: 12px;
+            font-weight: 400;
+            color: #6b7280;
+        }
+
+        .action-group button {
+            background: none;
+            border: none;
+            color: #e34c4c;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        
+        .action-group .edit-btn {
+            color: #38a169;
+        }
+
+        /* Gaya tombol utama di bawah */
+        .main-add-btn {
+            background: #38a169;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 16px; 
+            font-size: 16px;
+            font-weight: 700;
+            width: calc(100% - 32px); 
+            margin: 0 16px 20px; 
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(56, 161, 105, 0.4);
+            transition: background 0.2s;
+            display: block; 
+        }
+        .main-add-btn:hover {
+            background: #2d8659;
+        }
+
+        .main-content { padding-bottom: 20px; }
+        @media (max-width: 450px) {
+            .container { padding: 0; }
+            .page-header { margin: 0 16px; }
+            .content-card { 
+                margin-left: 16px; 
+                margin-right: 16px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <a href="admin-dashboard.html" class="back-btn">‹</a> 
+            <span class="page-title">Kelola Jenis Sampah</span>
+        </div>
+
+        <div class="main-content">
+            
+            <div class="content-card">
+                <div class="category-header">
+                    <h3>Kategori: Kertas (📄)</h3>
+                    <button class="add-btn" onclick="alert('Tambah Sub-Jenis Kertas')">➕ Sub-Jenis</button>
+                </div>
+                
+                <div class="waste-item">
+                    <div class="waste-info">Koran<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Koran')">Edit</button>
+                        <button onclick="alert('Hapus Koran')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Buku Bekas<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Buku Bekas')">Edit</button>
+                        <button onclick="alert('Hapus Buku Bekas')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Kertas Putih/HVS<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Kertas Putih/HVS')">Edit</button>
+                        <button onclick="alert('Hapus Kertas Putih/HVS')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Kertas Warna/Duplek<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Kertas Warna/Duplek')">Edit</button>
+                        <button onclick="alert('Hapus Kertas Warna/Duplek')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Kertas Buram<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Kertas Buram')">Edit</button>
+                        <button onclick="alert('Hapus Kertas Buram')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Karton<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Karton')">Edit</button>
+                        <button onclick="alert('Hapus Karton')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Kertas Lainnya<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Kertas Lainnya')">Edit</button>
+                        <button onclick="alert('Hapus Kertas Lainnya')">Hapus</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="category-header">
+                    <h3>Kategori: Plastik (🧴)</h3>
+                    <button class="add-btn" onclick="alert('Tambah Sub-Jenis Plastik')">➕ Sub-Jenis</button>
+                </div>
+                
+                <div class="waste-item">
+                    <div class="waste-info">Gelas Plastik - Gelas Bening (PP)<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Gelas Bening (PP)')">Edit</button>
+                        <button onclick="alert('Hapus Gelas Bening (PP)')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Gelas Warna (PP)<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Gelas Warna (PP)')">Edit</button>
+                        <button onclick="alert('Hapus Gelas Warna (PP)')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Botol (PET)<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Botol (PET)')">Edit</button>
+                        <button onclick="alert('Hapus Botol (PET)')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">HD Blow - Botol Plastik(HDPE)<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Botol Plastik(HDPE)')">Edit</button>
+                        <button onclick="alert('Hapus Botol Plastik(HDPE)')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">HD - Mainan Anak(PVC)<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Mainan Anak(PVC)')">Edit</button>
+                        <button onclick="alert('Hapus Mainan Anak(PVC)')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Damar - Perabotan Rumah(OTHERS)<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Perabotan Rumah(OTHERS)')">Edit</button>
+                        <button onclick="alert('Hapus Perabotan Rumah(OTHERS)')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Plastik Lainnya<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Plastik Lainnya')">Edit</button>
+                        <button onclick="alert('Hapus Plastik Lainnya')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Perabotan Plastik - Wadah Plastik (PP)<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Wadah Plastik (PP)')">Edit</button>
+                        <button onclick="alert('Hapus Wadah Plastik (PP)')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Tutup Botol (LDPE)<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Tutup Botol (LDPE)')">Edit</button>
+                        <button onclick="alert('Hapus Tutup Botol (LDPE)')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Karung (PP)<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Karung (PP)')">Edit</button>
+                        <button onclick="alert('Hapus Karung (PP)')">Hapus</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="category-header">
+                    <h3>Kategori: Alumunium (🥫)</h3>
+                    <button class="add-btn" onclick="alert('Tambah Sub-Jenis Alumunium')">➕ Sub-Jenis</button>
+                </div>
+                
+                <div class="waste-item">
+                    <div class="waste-info">Alma Tipis<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Alma Tipis')">Edit</button>
+                        <button onclick="alert('Hapus Alma Tipis')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Alma Tebal<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Alma Tebal')">Edit</button>
+                        <button onclick="alert('Hapus Alma Tebal')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Lis<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Lis')">Edit</button>
+                        <button onclick="alert('Hapus Lis')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Kaleng/Seng<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Kaleng/Seng')">Edit</button>
+                        <button onclick="alert('Hapus Kaleng/Seng')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Aluminium Lainnya<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Aluminium Lainnya')">Edit</button>
+                        <button onclick="alert('Hapus Aluminium Lainnya')">Hapus</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="category-header">
+                    <h3>Kategori: Besi (🚧)</h3>
+                    <button class="add-btn" onclick="alert('Tambah Sub-Jenis Besi')">➕ Sub-Jenis</button>
+                </div>
+                
+                <div class="waste-item">
+                    <div class="waste-info">Besi Tebal<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Besi Tebal')">Edit</button>
+                        <button onclick="alert('Hapus Besi Tebal')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Besi Tipis<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Besi Tipis')">Edit</button>
+                        <button onclick="alert('Hapus Besi Tipis')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Kuningan<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Kuningan')">Edit</button>
+                        <button onclick="alert('Hapus Kuningan')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Tembaga Biasa<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Tembaga Biasa')">Edit</button>
+                        <button onclick="alert('Hapus Tembaga Biasa')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Tembaga Super<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Tembaga Super')">Edit</button>
+                        <button onclick="alert('Hapus Tembaga Super')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Timah<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Timah')">Edit</button>
+                        <button onclick="alert('Hapus Timah')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Kepala Aki<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Kepala Aki')">Edit</button>
+                        <button onclick="alert('Hapus Kepala Aki')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Aki<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Aki')">Edit</button>
+                        <button onclick="alert('Hapus Aki')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Besi Premium<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Besi Premium')">Edit</button>
+                        <button onclick="alert('Hapus Besi Premium')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Besi Lainnya<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Besi Lainnya')">Edit</button>
+                        <button onclick="alert('Hapus Besi Lainnya')">Hapus</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="category-header">
+                    <h3>Kategori: Botol Kaca (🍾)</h3>
+                    <button class="add-btn" onclick="alert('Tambah Sub-Jenis Botol Kaca')">➕ Sub-Jenis</button>
+                </div>
+                
+                <div class="waste-item">
+                    <div class="waste-info">Botol Kecap<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Botol Kecap')">Edit</button>
+                        <button onclick="alert('Hapus Botol Kecap')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Botol Saus<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Botol Saus')">Edit</button>
+                        <button onclick="alert('Hapus Botol Saus')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Botol Sirup DHT<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Botol Sirup DHT')">Edit</button>
+                        <button onclick="alert('Hapus Botol Sirup DHT')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Botol Minuman Keras Besar<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Botol Minuman Keras Besar')">Edit</button>
+                        <button onclick="alert('Hapus Botol Minuman Keras Besar')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Botol Minuman Keras Kecil<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Botol Minuman Keras Kecil')">Edit</button>
+                        <button onclick="alert('Hapus Botol Minuman Keras Kecil')">Hapus</button>
+                    </div>
+                </div>
+                <div class="waste-item">
+                    <div class="waste-info">Botol Kaca Lainnya<small>Satuan: Kilogram</small></div>
+                    <div class="action-group">
+                        <button class="edit-btn" onclick="alert('Edit Botol Kaca Lainnya')">Edit</button>
+                        <button onclick="alert('Hapus Botol Kaca Lainnya')">Hapus</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="main-add-btn" onclick="alert('Tambah Kategori Utama')">➕ Tambah Kategori Utama Baru</button>
+        </div>
+    </div>
+</body>
+</html>

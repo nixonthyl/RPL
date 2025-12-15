@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setor.in - Admin Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            /* Latar belakang yang sedikit berbeda untuk admin */
+            background: linear-gradient(135deg, #a8d5ba 0%, #7ec896 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1a4d2e;
+            margin-bottom: 5px;
+        }
+        
+        .role-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2d8659;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        .icon-input {
+            position: relative;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"] { /* Contoh untuk input username/email */
+             padding-left: 50px;
+        }
+
+        input[type="password"] { /* Contoh untuk input password */
+             padding-left: 50px;
+        }
+
+        .icon-input:nth-child(1)::before {
+            content: '👤';
+            position: absolute;
+            left: 15px;
+            font-size: 18px;
+            z-index: 10;
+        }
+
+        .icon-input:nth-child(2)::before {
+            content: '🔒';
+            position: absolute;
+            left: 15px;
+            font-size: 18px;
+            z-index: 10;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #2d8659;
+        }
+
+        input::placeholder {
+            color: #999;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: #2d8659;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #1f5c40;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-section">
+            <div class="logo-text">Setor.in</div>
+            <div class="role-text">ADMINISTRATOR ACCESS</div>
+        </div>
+
+        <h1>Selamat Datang Admin!</h1>
+        <p class="subtitle">Silahkan masuk menggunakan akun administrator Anda.</p>
+
+        <form onsubmit="handleAdminLogin(event)">
+            <div class="icon-input">
+                <input type="text" id="admin-username" placeholder="Username / ID Admin" required>
+            </div>
+
+            <div class="icon-input">
+                <input type="password" id="admin-password" placeholder="Kata Sandi" required>
+            </div>
+
+            <button type="submit" class="login-btn">MASUK SEBAGAI ADMIN</button>
+        </form>
+    </div>
+
+    <script>
+        function handleAdminLogin(event) {
+            event.preventDefault();
+            // Logika login fiktif
+            const username = document.getElementById('admin-username').value;
+            const password = document.getElementById('admin-password').value;
+
+            if (username === 'admin' && password === '123456') {
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                alert('Username atau Kata Sandi salah.');
+            }
+        }
+    </script>
+</body>
+</html>

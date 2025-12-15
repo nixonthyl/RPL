@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Transaksi Drop Off - Admin</title>
+    <style>
+        /* Menggunakan style yang mirip dengan riwayat-transaksi.html */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #e9f5e9 0%, #d4e8d4 100%); 
+            min-height: 100vh;
+            padding: 0; 
+        }
+        .container { max-width: 450px; margin: 0 auto; padding: 0 16px; }
+        .page-header {
+            padding: 20px 0 10px 0;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e7a2e;
+            text-align: center;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .back-btn {
+            font-size: 24px;
+            color: #4b5563;
+            text-decoration: none;
+            margin-right: 40px;
+        }
+        .page-title { flex-grow: 1; text-align: center; margin-left: -39px; }
+        
+        .summary-card {
+            background: #d4f0dd;
+            color: #1e7a2e;
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .summary-card .label { font-size: 13px; font-weight: 600; }
+        .summary-card .value { font-size: 18px; font-weight: 800; }
+
+
+        .transaction-list {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .transaction-item {
+            padding: 15px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .transaction-item:last-child { border-bottom: none; }
+
+        .trans-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .trans-id {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        .trans-status {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: #d4f0dd;
+            color: #1e7a2e;
+        }
+
+        .trans-details {
+            font-size: 13px;
+            color: #4b5563;
+        }
+        
+        .trans-details strong {
+            color: #1e7a2e;
+        }
+
+        .trans-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 5px;
+        }
+        .trans-mitra {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        .trans-amount {
+            font-size: 14px;
+            font-weight: 700;
+            color: #e34c4c;
+        }
+
+
+        .main-content { padding-bottom: 20px; }
+        @media (max-width: 450px) {
+            .summary-card, .transaction-list { margin-left: 16px; margin-right: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <a href="admin-dashboard.html" class="back-btn">‹</a>
+            <span class="page-title">Riwayat Transaksi Drop Off</span>
+        </div>
+
+        <div class="main-content">
+            <div class="summary-card">
+                <div class="summary-item">
+                    <div class="label">Total Transaksi Selesai (Bulan Ini)</div>
+                    <div class="value">124</div>
+                </div>
+            </div>
+
+            <div class="transaction-list">
+                <div class="transaction-item">
+                    <div class="trans-header">
+                        <span class="trans-id">#SET-20251204-001 (Drop Off)</span>
+                        <span class="trans-status">Selesai</span>
+                    </div>
+                    <div class="trans-details">
+                        User: John Doe | Jenis: Plastik, Kertas | Berat: <strong>5.0 Kg</strong>
+                    </div>
+                    <div class="trans-footer">
+                        <span class="trans-mitra">Diambil oleh: Mitra #101 | 04 Des 2025</span>
+                        <span class="trans-amount">+50.000 Poin</span>
+                    </div>
+                </div>
+                
+                <div class="transaction-item">
+                    <div class="trans-header">
+                        <span class="trans-id">#SET-20251203-002 (Drop Off)</span>
+                        <span class="trans-status" style="background: #fefcbf; color: #727b13;">Menunggu Jemput</span>
+                    </div>
+                    <div class="trans-details">
+                        User: Jane Smith | Jenis: Aluminium | Berat: <strong>2.0 Kg</strong>
+                    </div>
+                    <div class="trans-footer">
+                        <span class="trans-mitra">Belum ditugaskan | 03 Des 2025</span>
+                        <span class="trans-amount">Belum Dikonfirmasi</span>
+                    </div>
+                </div>
+                
+                <div class="transaction-item">
+                    <div class="trans-header">
+                        <span class="trans-id">#SET-20251202-003 (Drop Off)</span>
+                        <span class="trans-status" style="background: #f7e0e0; color: #e34c4c;">Dibatalkan</span>
+                    </div>
+                    <div class="trans-details">
+                        User: Budi | Jenis: Besi | Berat: <strong>1.5 Kg</strong>
+                    </div>
+                    <div class="trans-footer">
+                        <span class="trans-mitra">Dibatalkan oleh User | 02 Des 2025</span>
+                        <span class="trans-amount">Dibatalkan</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

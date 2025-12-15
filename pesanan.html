@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesanan - Setor.in</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #e9f5e9 0%, #d4e8d4 100%); 
+            min-height: 100vh;
+            padding: 0; 
+        }
+
+        .container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 0 16px; 
+        }
+
+        /* --- Header Halaman --- */
+        .page-header {
+            padding: 20px 0 10px 0;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1e7a2e;
+            text-align: center;
+        }
+
+        /* --- Tab Navigation --- */
+        .tab-nav {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            padding: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 10px 15px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: #6b7280;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-button.active {
+            color: #1e7a2e;
+            background: #d4f0dd; /* Latar belakang hijau muda saat aktif */
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        /* --- Order List & Card --- */
+        .order-card {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+
+        .order-id {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .order-status {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* Status colors */
+        .status-progress {
+            background-color: #fefcbf; /* Kuning muda */
+            color: #727b13; 
+        }
+
+        .status-completed {
+            background-color: #d4f0dd; /* Hijau muda */
+            color: #1e7a2e;
+        }
+        
+        .status-cancelled {
+            background-color: #f7e0e0; /* Merah muda */
+            color: #e34c4c;
+        }
+
+        .order-details {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .order-details strong {
+            color: #1f2937;
+            font-weight: 600;
+        }
+
+        .order-date {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        /* --- Empty State / No Orders --- */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6b7280;
+        }
+
+        .empty-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #1f2937;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+        }
+
+        /* --- Bottom Navigation (from Dashboard) --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0; 
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            padding: 12px 0; 
+            display: flex;
+            justify-content: space-around; 
+            align-items: center;
+            width: 100%; 
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        
+        .nav-item {
+            flex: 1; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+            color: #9ca3af; 
+            font-size: 11px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .nav-item.active {
+            color: #1e7a2e;
+        }
+
+        .nav-icon {
+            font-size: 22px;
+        }
+
+        .main-content {
+            padding-bottom: 80px; 
+        }
+
+        /* Media Query for mobile screen optimization */
+        @media (max-width: 450px) {
+            .container {
+                padding: 0; 
+            }
+            .page-header {
+                margin: 0 16px;
+            }
+            .tab-nav,
+            .order-card,
+            .empty-state {
+                margin-left: 16px;
+                margin-right: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="page-header">Daftar Pesanan</h2>
+
+        <div class="tab-nav">
+            <button class="tab-button active" onclick="showTab('on-progress')">Sedang Diproses</button>
+            <button class="tab-button" onclick="showTab('completed')">Selesai</button>
+        </div>
+
+        <div class="main-content">
+            <div id="on-progress" class="order-list">
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">#SET-20251128-001</span>
+                        <span class="order-status status-progress">Menunggu Jemput</span>
+                    </div>
+                    <div class="order-details">
+                        Jenis: <strong>Drop Off (Plastik, Kertas)</strong>
+                    </div>
+                    <div class="order-details">
+                        Alamat: Jalan Merdeka No. 10
+                    </div>
+                    <div class="order-date">Tanggal Pesan: 28 Nov 2025</div>
+                </div>
+
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">#SET-20251129-002</span>
+                        <span class="order-status status-progress">Poin Dihitung</span>
+                    </div>
+                    <div class="order-details">
+                        Jenis: <strong>Setor.in Box (Logam)</strong>
+                    </div>
+                    <div class="order-details">
+                        Lokasi: Gerai Setor.in Mall A
+                    </div>
+                    <div class="order-date">Tanggal Setor: 29 Nov 2025</div>
+                </div>
+                
+            </div>
+
+            <div id="completed" class="order-list" style="display: none;">
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">#SET-20251120-003</span>
+                        <span class="order-status status-completed">Selesai</span>
+                    </div>
+                    <div class="order-details">
+                        Jenis: <strong>Drop Off (Botol Kaca)</strong>
+                    </div>
+                    <div class="order-details">
+                        Points Diterima: <strong>+15.000 Points</strong>
+                    </div>
+                    <div class="order-date">Tanggal Selesai: 20 Nov 2025</div>
+                </div>
+
+                <div class="order-card">
+                    <div class="order-header">
+                        <span class="order-id">#SET-20251125-004</span>
+                        <span class="order-status status-cancelled">Dibatalkan</span>
+                    </div>
+                    <div class="order-details">
+                        Jenis: <strong>Drop Off (Sampah Campur)</strong>
+                    </div>
+                    <div class="order-details">
+                        Catatan: Sampah tidak sesuai kriteria
+                    </div>
+                    <div class="order-date">Tanggal Dibatalkan: 25 Nov 2025</div>
+                </div>
+
+                </div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="dashboard.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="pesanan.html" class="nav-item active">
+            <span class="nav-icon">📋</span>
+            <span>Pesanan</span>
+        </a>
+        <a href="#" class="nav-item" onclick="alert('Pesan - Coming Soon!')">
+            <span class="nav-icon">📸</span>
+            <span>Gallery</span>
+        </a>
+        <a href="pesan.html" class="nav-item">
+            <span class="nav-icon">💬</span>
+            <span>Pesan</span>
+        </a>
+        <a href="akun.html" class="nav-item">
+            <span class="nav-icon">👤</span>
+            <span>Akun</span>
+        </a>
+    </div>
+
+    <script>
+        // JavaScript untuk menangani perpindahan antar tab
+        function showTab(tabId) {
+            // Sembunyikan semua konten tab
+            document.querySelectorAll('.order-list').forEach(tab => {
+                tab.style.display = 'none';
+            });
+
+            // Hapus status aktif dari semua tombol
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Tampilkan konten tab yang dipilih
+            document.getElementById(tabId).style.display = 'block';
+
+            // Set tombol yang diklik menjadi aktif
+            event.currentTarget.classList.add('active');
+        }
+
+        // Set Navigasi Bottom menjadi aktif di halaman Pesanan
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.bottom-nav a[href="pesanan.html"]').classList.add('active');
+        });
+    </script>
+</body>
+</html>

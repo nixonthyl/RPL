@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Setor.in</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            /* Latar belakang gradient yang lebih lembut */
+            background: linear-gradient(135deg, #e9f5e9 0%, #d4e8d4 100%); 
+            min-height: 100vh;
+            /* Hapus padding vertikal di body, biarkan 0 */
+            padding: 0; 
+        }
+
+        .container {
+            max-width: 450px; /* Batasi lebar agar tetap terlihat bagus di tablet */
+            margin: 0 auto;
+            /* Tambahkan padding horizontal 16px untuk konten */
+            padding: 0 16px; 
+        }
+
+        /* --- Header --- */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+            padding-top: 20px; /* Tambahkan padding atas untuk menjaga jarak dari status bar HP */
+        }
+
+        .logo {
+            width: 40px; 
+            height: 40px;
+            background: #38a169; 
+            border-radius: 8px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white; 
+            flex-shrink: 0;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e7a2e;
+        }
+
+        /* --- Greeting Card --- */
+        .greeting-card {
+            background: white;
+            border-radius: 16px; 
+            padding: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            background: #38a169; 
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .greeting-content h2 {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .greeting-content p {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .greeting-icon {
+            background: none; 
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        /* --- Points Section --- */
+        .points-card {
+            background: linear-gradient(90deg, #38a169 0%, #2d8659 100%); 
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column; 
+            gap: 15px;
+            color: white;
+            box-shadow: 0 6px 15px rgba(30, 122, 46, 0.4); 
+        }
+
+        .points-info {
+            flex: none; 
+            border: none; 
+            background: rgba(255, 255, 255, 0.15); 
+            border-radius: 10px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .points-icon {
+            font-size: 24px;
+            color: #ffeb3b; 
+        }
+
+        .points-text {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0px;
+        }
+
+        .points-amount {
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-action {
+            flex: 1;
+            background: white; 
+            color: #1e7a2e; 
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: transform 0.1s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-action:hover {
+            background: #f0f0f0;
+            transform: translateY(-1px);
+        }
+
+        /* --- Feature Cards (Aksi Utama) --- */
+        .feature-card {
+            background: white; 
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #1f2937; 
+            border: 1px solid #e5e7eb; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s;
+        }
+
+        .feature-card:hover {
+            background: #f9fafb;
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Warna latar ikon spesifik untuk Drop Off */
+        .feature-card:first-of-type .feature-icon {
+            background-color: #f7e0e0; 
+            color: #e34c4c;
+        }
+
+        /* Warna latar ikon spesifik untuk Setor.in Box */
+        .feature-card:last-of-type .feature-icon {
+            background-color: #e0f7e9; 
+            color: #1e7a2e;
+        }
+
+
+        .feature-icon {
+            font-size: 32px;
+            width: 55px; 
+            height: 55px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .feature-content h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .feature-content p {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        /* --- Bottom Navigation --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0; 
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            padding: 12px 0; 
+            display: flex;
+            justify-content: space-around; 
+            align-items: center;
+            width: 100%; 
+            max-width: none; 
+            border-radius: 0; 
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        
+        .nav-item {
+            flex: 1; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            text-decoration: none;
+            color: #9ca3af; 
+            font-size: 11px;
+            font-weight: 600;
+            transition: color 0.3s;
+            padding: 0; 
+        }
+
+        .nav-item.active,
+        .nav-item:hover {
+            color: #1e7a2e;
+        }
+
+        .nav-icon {
+            font-size: 22px;
+        }
+
+        .main-content {
+            padding-bottom: 80px; 
+        }
+
+        /* MEDIA QUERY: Pastikan konten mengisi seluruh lebar pada layar HP */
+        @media (max-width: 450px) {
+            .container {
+                /* Hilangkan padding horizontal pada container agar konten terlihat penuh di layar HP */
+                padding: 0; 
+            }
+
+            .header, 
+            .greeting-card, 
+            .points-card, 
+            .feature-card {
+                /* Tambahkan padding horizontal ke setiap elemen di dalam container */
+                margin-left: 16px;
+                margin-right: 16px;
+                max-width: calc(100% - 32px);
+                width: auto;
+            }
+
+            .header {
+                /* Header tidak perlu padding kiri kanan di sini karena sudah ada margin */
+                margin-left: 16px;
+                margin-right: 16px;
+            }
+
+            .main-content {
+                 /* Pastikan main content memiliki ruang di bawah agar tidak tertutup nav bar */
+                padding-bottom: 100px; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🌱</div>
+            <h1>Setor.in</h1>
+        </div>
+
+        <div class="main-content">
+            <div class="greeting-card">
+                <div class="user-avatar">👤</div>
+                <div class="greeting-content">
+                    <h2>Halo, Raehan!</h2>
+                    <p>Yuk Daur Ulang Sampahmu</p>
+                </div>
+                <div class="greeting-icon">🌍</div>
+            </div>
+
+            <div class="points-card">
+                <div class="points-info">
+                    <div class="points-icon">🎯</div>
+                    <div>
+                        <div class="points-text">Setor.in Points</div>
+                        <div class="points-amount">0</div>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button class="btn-action" onclick="window.location.href='top-up.html'">➕ Top Up</button>
+                    <button class="btn-action" onclick="window.location.href='redeem.html'">🎁 Redeem</button>
+                </div>
+            </div>
+
+            <a href="drop-off.html" class="feature-card">
+                <div class="feature-icon">🚚</div>
+                <div class="feature-content">
+                    <h3>Drop Off</h3>
+                    <p>Jemput sekarang sampahmu</p>
+                </div>
+            </a>
+
+            <a href="setor-in-box.html" class="feature-card">
+                <div class="feature-icon">♻️</div>
+                <div class="feature-content">
+                    <h3>Setor.in Box</h3>
+                    <p>Tukar sampahmu jadi points</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="dashboard.html" class="nav-item active">
+            <span class="nav-icon">🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="pesanan.html" class="nav-item">
+            <span class="nav-icon">📋</span>
+            <span>Pesanan</span>
+        </a>
+        <a href="#" class="nav-item"  onclick="alert('Pesan - Coming Soon!')">
+            <span class="nav-icon">📸</span>
+            <span>Gallery</span>
+        </a>
+        <a href="pesan.html" class="nav-item">
+            <span class="nav-icon">💬</span>
+            <span>Pesan</span>
+        </a>
+        <a href="akun.html" class="nav-item">
+            <span class="nav-icon">👤</span>
+            <span>Akun</span>
+        </a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drop Off - Setor.in</title>
+    <style>
+        /* ... (CSS tetap sama seperti sebelumnya) ... */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #a8d5ba 0%, #7ec896 100%);
+            min-height: 100vh;
+            padding: 16px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            background: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+        }
+
+        .back-btn {
+            background: #a8d5ba;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #7ec896;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f2937;
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-bottom: 100px;
+        }
+
+        .info-text {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .info-text h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        .info-text p {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        /* Info Section */
+        .info-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            background: #1e7a2e;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        /* Upload Section */
+        .upload-area {
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            padding: 24px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f9fafb;
+            margin-bottom: 16px;
+        }
+
+        .upload-area:hover {
+            border-color: #1e7a2e;
+            background: #f0f9f0;
+        }
+
+        .upload-area.drag-over {
+            border-color: #1e7a2e;
+            background: #e8f5e9;
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .upload-text {
+            font-size: 14px;
+            color: #1f2937;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .upload-hint {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        #photoInput {
+            display: none;
+        }
+
+        /* Photo Gallery */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .photo-item {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #f3f4f6;
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-delete {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: rgba(220, 38, 38, 0.8);
+            color: white;
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .photo-item:hover .photo-delete {
+            opacity: 1;
+        }
+
+        .photo-count {
+            font-size: 12px;
+            color: #6b7280;
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        /* Waste Category */
+        .waste-category {
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .category-header {
+            background: #f3f4f6;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .category-header:hover {
+            background: #e5e7eb;
+        }
+
+        .category-icon {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .category-toggle {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .category-content {
+            display: none;
+            padding: 12px 16px;
+            background: white;
+        }
+
+        .category-content.active {
+            display: block;
+        }
+
+        .sub-waste-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .sub-waste-item:last-child {
+            border-bottom: none;
+        }
+
+        .sub-waste-name {
+            font-size: 14px;
+            color: #1f2937;
+            font-weight: 500;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #1e7a2e;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .qty-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qty-display {
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        /* Waste Info */
+        .waste-info-box {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .waste-info-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #1e7a2e;
+            box-shadow: 0 0 0 3px rgba(30, 122, 46, 0.1);
+        }
+
+        /* Address Section */
+        .address-box {
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 16px 0;
+            font-size: 13px;
+            color: #4b5563;
+            line-height: 1.6;
+        }
+
+        .address-label {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #1e7a2e;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #15612d;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #1f2937;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background: #1e7a2e;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #15612d;
+        }
+
+        .submit-btn:disabled {
+            background: #d1d5db;
+            cursor: not-allowed;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            width: 90%;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 12px 12px 0 0;
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #6b7280;
+            font-size: 12px;
+            transition: color 0.3s;
+            padding: 0 12px;
+        }
+
+        .nav-item.active,
+        .nav-item:hover {
+            color: #1e7a2e;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .bottom-nav {
+                width: 95%;
+                gap: 4px;
+                padding: 10px 12px;
+            }
+
+            .nav-item {
+                padding: 0 8px;
+            }
+
+            .photo-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="back-btn" onclick="window.history.back()">← </button>
+            <h1>Drop Off</h1>
+        </div>
+
+        <div class="main-content">
+            <div class="info-text">
+                <h2>Siap menjemput sampahmu untuk kehidupan yang lebih baik</h2>
+                <p>Pilih jenis dan masukkan perkiraan berat sampah</p>
+            </div>
+
+            <div class="info-section">
+                <div class="section-title">📸 Upload Foto Sampah (Max 3 Foto)</div>
+                
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📷</div>
+                    <div class="upload-text">Klik atau Seret Foto di Sini</div>
+                    <div class="upload-hint">Maksimal 3 foto, format JPG/PNG</div>
+                </div>
+                <input type="file" id="photoInput" accept="image/*" multiple>
+                
+                <div id="photoGallery" class="photo-gallery"></div>
+                <div id="photoCount" class="photo-count"></div>
+            </div>
+
+            <div class="info-section">
+                <div class="section-title">🗑️ Jenis Sampah</div>
+                
+                <div id="wasteCategories"></div>
+
+                <div class="waste-info-box" style="margin-top: 16px;">
+                    <div class="waste-info-label">Total Estimasi Berat Sampah</div>
+                    <div style="font-size: 24px; font-weight: 700; color: #1e7a2e;">
+                        <span id="totalWeight">0</span> kg
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <div class="section-title">📍 Informasi Penjemputan</div>
+                
+                <div class="waste-info-box">
+                    <div class="waste-info-label">Alamat Rumah</div>
+                    <textarea id="addressInput" class="form-input" placeholder="Masukkan alamat lengkap Anda..." style="min-height: 100px; resize: vertical;"></textarea>
+                </div>
+                
+                <div class="waste-info-box">
+                    <div class="waste-info-label">Nomor Ponsel</div>
+                    <input type="tel" id="phoneInput" class="form-input" placeholder="08123456789">
+                </div>
+            </div>
+
+            <div class="info-section">
+                <div class="section-title">📝 Informasi Tambahan</div>
+                <div class="waste-info-box">
+                    <div class="waste-info-label">Catatan (Opsional)</div>
+                    <textarea id="notesInput" class="form-input" placeholder="Tambahkan catatan tentang sampah Anda..." style="min-height: 80px; resize: vertical;"></textarea>
+                </div>
+            </div>
+
+            <button class="submit-btn" onclick="submitDropOff()">PESAN JEMPUT</button>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="dashboard.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item" onclick="alert('Pesanan - Coming Soon!')">
+            <span class="nav-icon">📋</span>
+            <span>Pesanan</span>
+        </a>
+        <a href="#" class="nav-item" onclick="alert('Gallery - Coming Soon!')">
+            <span class="nav-icon">📸</span>
+            <span>Gallery</span>
+        </a>
+        <a href="#" class="nav-item" onclick="alert('Pesan - Coming Soon!')">
+            <span class="nav-icon">💬</span>
+            <span>Pesan</span>
+        </a>
+        <a href="#" class="nav-item" onclick="alert('Akun - Coming Soon!')">
+            <span class="nav-icon">👤</span>
+            <span>Akun</span>
+        </a>
+    </div>
+
+    <script>
+        let uploadedPhotos = [];
+        const maxPhotos = 3;
+        let wasteData = {};
+        
+        // Harga Poin Fiktif per Kg
+        const wastePrices = {
+            'Koran': 1800, 'Buku Bekas': 2500, 'Kertas Putih/HVS': 3500, 'Kertas Warna/Duplek': 1500, 'Kertas Buram': 1200, 'Karton': 1000, 'Kertas Lainnya': 800,
+            'Gelas Plastik - Gelas Bening (PP)': 3200, 'Gelas Warna (PP)': 2800, 'Botol (PET)': 4000, 'HD Blow - Botol Plastik(HDPE)': 3800, 'HD - Mainan Anak(PVC)': 2500, 'Damar - Perabotan Rumah(OTHERS)': 1800, 'Plastik Lainnya': 1000, 'Perabotan Plastik - Wadah Plastik (PP)': 2000, 'Tutup Botol (LDPE)': 2500, 'Karung (PP)': 1500,
+            'Alma Tipis': 12000, 'Alma Tebal': 15000, 'Lis': 10000, 'Kaleng/Seng': 8000, 'Aluminium Lainnya': 6000,
+            'Besi Tebal': 9500, 'Besi Tipis': 8500, 'Kuningan': 30000, 'Tembaga Biasa': 45000, 'Tembaga Super': 50000, 'Timah': 20000, 'Kepala Aki': 15000, 'Aki': 10500, 'Besi Premium': 12000, 'Besi Lainnya': 7000,
+            'Botol Kecap': 450, 'Botol Saus': 400, 'Botol Sirup DHT': 550, 'Botol Minuman Keras Besar': 600, 'Botol Minuman Keras Kecil': 500, 'Botol Kaca Lainnya': 300
+        };
+
+
+        // Waste categories data
+        const wasteCategories = {
+            'Kertas': {
+                icon: '📄',
+                items: ['Koran', 'Buku Bekas', 'Kertas Putih/HVS', 'Kertas Warna/Duplek', 'Kertas Buram', 'Karton', 'Kertas Lainnya']
+            },
+            'Plastik': {
+                icon: '🧴',
+                items: ['Gelas Plastik - Gelas Bening (PP)', 'Gelas Warna (PP)', 'Botol (PET)', 'HD Blow - Botol Plastik(HDPE)', 'HD - Mainan Anak(PVC)', 'Damar - Perabotan Rumah(OTHERS)', 'Plastik Lainnya', 'Perabotan Plastik - Wadah Plastik (PP)', 'Tutup Botol (LDPE)', 'Karung (PP)']
+            },
+            'Alumunium': {
+                icon: '🥫',
+                items: ['Alma Tipis', 'Alma Tebal', 'Lis', 'Kaleng/Seng', 'Aluminium Lainnya']
+            },
+            'Besi': {
+                icon: '🚧',
+                items: ['Besi Tebal', 'Besi Tipis', 'Kuningan', 'Tembaga Biasa', 'Tembaga Super', 'Timah', 'Kepala Aki', 'Aki', 'Besi Premium', 'Besi Lainnya']
+            },
+            'Botol Kaca': {
+                icon: '🍾',
+                items: ['Botol Kecap', 'Botol Saus', 'Botol Sirup DHT', 'Botol Minuman Keras Besar', 'Botol Minuman Keras Kecil', 'Botol Kaca Lainnya']
+            }
+        };
+
+        // Initialize waste categories
+        function initializeWasteCategories() {
+            const container = document.getElementById('wasteCategories');
+            container.innerHTML = '';
+
+            Object.keys(wasteCategories).forEach((categoryName, index) => {
+                const category = wasteCategories[categoryName];
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'waste-category';
+
+                let itemsHTML = category.items.map((item, itemIndex) => {
+                    const price = wastePrices[item] || 0;
+                    return `
+                        <div class="sub-waste-item">
+                            <span class="sub-waste-name">${item} <small>(Rp ${price.toLocaleString('id-ID')} / Kg)</small></span>
+                            <div class="quantity-control">
+                                <button class="qty-btn" onclick="decreaseQty('${categoryName}', '${item}')">−</button>
+                                <span class="qty-display" id="qty-${categoryName}-${item.replace(/[^a-zA-Z0-9]/g, '')}">0</span>
+                                <button class="qty-btn" onclick="increaseQty('${categoryName}', '${item}')">+</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                categoryDiv.innerHTML = `
+                    <div class="category-header" onclick="toggleCategory(this)">
+                        <span>
+                            <span class="category-icon">${category.icon}</span>
+                            ${categoryName}
+                        </span>
+                        <span class="category-toggle">▼</span>
+                    </div>
+                    <div class="category-content">
+                        ${itemsHTML}
+                    </div>
+                `;
+
+                container.appendChild(categoryDiv);
+
+                // Initialize waste data
+                if (!wasteData[categoryName]) {
+                    wasteData[categoryName] = {};
+                    category.items.forEach((item) => {
+                        wasteData[categoryName][item] = 0;
+                    });
+                }
+            });
+        }
+
+        function toggleCategory(header) {
+            const content = header.nextElementSibling;
+            content.classList.toggle('active');
+            const toggle = header.querySelector('.category-toggle');
+            toggle.textContent = content.classList.contains('active') ? '▲' : '▼';
+        }
+
+        function increaseQty(category, item) {
+            wasteData[category][item] = (wasteData[category][item] || 0) + 1;
+            updateQtyDisplay(category, item);
+            updateTotalWeight();
+        }
+
+        function decreaseQty(category, item) {
+            if ((wasteData[category][item] || 0) > 0) {
+                wasteData[category][item] = wasteData[category][item] - 1;
+                updateQtyDisplay(category, item);
+                updateTotalWeight();
+            }
+        }
+
+        function updateQtyDisplay(category, item) {
+            const safeId = item.replace(/[^a-zA-Z0-9]/g, '');
+            const element = document.getElementById(`qty-${category}-${safeId}`);
+            if (element) {
+                element.textContent = wasteData[category][item];
+            }
+        }
+
+        function updateTotalWeight() {
+            let total = 0;
+            Object.keys(wasteData).forEach(category => {
+                Object.keys(wasteData[category]).forEach(item => {
+                    total += wasteData[category][item];
+                });
+            });
+            document.getElementById('totalWeight').textContent = total;
+        }
+
+        // Photo handling (simplified code)
+        const uploadArea = document.getElementById('uploadArea');
+        const photoInput = document.getElementById('photoInput');
+        const photoGallery = document.getElementById('photoGallery');
+        const photoCount = document.getElementById('photoCount');
+
+        uploadArea.addEventListener('click', () => { photoInput.click(); });
+        uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('drag-over'); });
+        uploadArea.addEventListener('dragleave', () => { uploadArea.classList.remove('drag-over'); });
+        photoInput.addEventListener('change', (e) => { 
+             const files = Array.from(e.target.files);
+             handleFiles(files); 
+        });
+
+        function handleFiles(files) {
+            const remainingSlots = maxPhotos - uploadedPhotos.length;
+            const filesToAdd = files.slice(0, remainingSlots);
+
+            filesToAdd.forEach(file => {
+                if (file.type.startsWith('image/') && uploadedPhotos.length < maxPhotos) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        uploadedPhotos.push({ data: e.target.result, name: file.name });
+                        updatePhotoGallery();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        function updatePhotoGallery() {
+            photoGallery.innerHTML = '';
+            uploadedPhotos.forEach((photo, index) => {
+                const photoItem = document.createElement('div');
+                photoItem.className = 'photo-item';
+                photoItem.innerHTML = `<img src="${photo.data}" alt="Foto ${index + 1}"><button class="photo-delete" onclick="deletePhoto(${index})">✕</button>`;
+                photoGallery.appendChild(photoItem);
+            });
+
+            if (uploadedPhotos.length > 0) {
+                photoCount.textContent = `${uploadedPhotos.length}/${maxPhotos} foto terpilih`;
+            } else {
+                photoCount.textContent = '';
+            }
+        }
+
+        function deletePhoto(index) {
+            uploadedPhotos.splice(index, 1);
+            updatePhotoGallery();
+        }
+
+
+        // --- FUNGSI UTAMA: SUBMIT DAN REDIRECT KE PEMBAYARAN ---
+        function submitDropOff() {
+            const address = document.getElementById('addressInput').value.trim();
+            const phone = document.getElementById('phoneInput').value.trim();
+            const notes = document.getElementById('notesInput').value.trim();
+            const totalWeight = parseInt(document.getElementById('totalWeight').textContent);
+
+            if (uploadedPhotos.length === 0) {
+                alert('Silakan upload minimal 1 foto sampah');
+                return;
+            }
+
+            if (totalWeight === 0) {
+                alert('Silakan pilih minimal 1 kg sampah');
+                return;
+            }
+
+            if (!address || !phone) {
+                alert('Silakan lengkapi Alamat Rumah dan Nomor Ponsel Anda');
+                return;
+            }
+            
+            // Filter dan Hitung Detail Transaksi
+            const selectedItems = [];
+            let totalEstimasiPoin = 0;
+
+            Object.keys(wasteData).forEach(category => {
+                Object.keys(wasteData[category]).forEach(item => {
+                    const qty = wasteData[category][item];
+                    if (qty > 0) {
+                        const price = wastePrices[item] || 0;
+                        const estimasiPoin = qty * price;
+                        totalEstimasiPoin += estimasiPoin;
+
+                        selectedItems.push({
+                            category: category,
+                            item: item,
+                            qty: qty,
+                            unit: 'Kg',
+                            pricePerUnit: price,
+                            estimasiPoin: estimasiPoin
+                        });
+                    }
+                });
+            });
+            
+            // Data yang akan dikirim ke halaman pembayaran
+            const transactionData = {
+                items: selectedItems,
+                info: {
+                    phone: phone,
+                    address: address,
+                    notes: notes,
+                    totalWeight: totalWeight,
+                    totalEstimasiPoin: totalEstimasiPoin,
+                    biayaJemput: 20000 // Biaya tetap Rp 20.000
+                }
+            };
+            
+            // Simpan ke localStorage
+            localStorage.setItem('dropOffTransaction', JSON.stringify(transactionData));
+
+            // Redirect ke halaman pembayaran
+            window.location.href = 'pembayaran.html';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeWasteCategories();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kelola Harga Poin - Admin</title>
+    <style>
+        /* Menggunakan style yang mirip dengan admin-kelola-jenis.html */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #e9f5e9 0%, #d4e8d4 100%); 
+            min-height: 100vh;
+            padding: 0; 
+        }
+        .container { max-width: 450px; margin: 0 auto; padding: 0 16px; }
+        .page-header {
+            padding: 20px 0 10px 0;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e7a2e;
+            text-align: center;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .back-btn {
+            font-size: 24px;
+            color: #4b5563;
+            text-decoration: none;
+            margin-right: 40px;
+        }
+        .page-title { flex-grow: 1; text-align: center; margin-left: -39px; }
+        
+        /* Kartu Konten */
+        .content-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-left: 16px; 
+            margin-right: 16px; 
+        }
+
+        .info-text {
+            font-size: 14px; 
+            color: #6b7280; 
+            margin-bottom: 15px; 
+            border-bottom: 1px solid #ddd; 
+            padding-bottom: 10px;
+        }
+        
+        .category-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1f2937;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #38a169;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+        .price-item:last-of-type { border-bottom: none; }
+
+        .waste-name {
+            font-size: 14px;
+            color: #1f2937;
+            flex-grow: 1;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .input-group input {
+            width: 80px;
+            padding: 6px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            text-align: right;
+        }
+        .input-group span {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .save-btn {
+            background: #38a169;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            width: 100%;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .main-content { padding-bottom: 20px; }
+        @media (max-width: 450px) {
+            .container { padding: 0; }
+            .page-header { margin: 0 16px; }
+            .content-card { 
+                margin-left: 16px; 
+                margin-right: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <a href="admin-dashboard.html" class="back-btn">‹</a>
+            <span class="page-title">Kelola Harga Poin</span>
+        </div>
+
+        <div class="main-content">
+            <div class="content-card">
+                <div class="info-text">
+                    Perbarui harga konversi per kilogram (Poin/Kg) untuk setiap sub-jenis sampah.
+                </div>
+                
+                <form onsubmit="event.preventDefault(); alert('Harga Berhasil Diperbarui!')">
+                    
+                    <div class="category-title">📄 Kertas</div>
+                    <div class="price-item">
+                        <span class="waste-name">Koran</span>
+                        <div class="input-group">
+                            <input type="number" value="1800" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Buku Bekas</span>
+                        <div class="input-group">
+                            <input type="number" value="2500" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Kertas Putih/HVS</span>
+                        <div class="input-group">
+                            <input type="number" value="3500" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Kertas Warna/Duplek</span>
+                        <div class="input-group">
+                            <input type="number" value="1500" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Kertas Buram</span>
+                        <div class="input-group">
+                            <input type="number" value="1200" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Karton</span>
+                        <div class="input-group">
+                            <input type="number" value="1000" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Kertas Lainnya</span>
+                        <div class="input-group">
+                            <input type="number" value="800" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+
+                    <div class="category-title" style="margin-top: 25px;">🧴 Plastik</div>
+                    <div class="price-item">
+                        <span class="waste-name">Gelas Plastik - Gelas Bening (PP)</span>
+                        <div class="input-group">
+                            <input type="number" value="3200" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Gelas Warna (PP)</span>
+                        <div class="input-group">
+                            <input type="number" value="2800" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Botol (PET)</span>
+                        <div class="input-group">
+                            <input type="number" value="4000" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">HD Blow - Botol Plastik(HDPE)</span>
+                        <div class="input-group">
+                            <input type="number" value="3800" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">HD - Mainan Anak(PVC)</span>
+                        <div class="input-group">
+                            <input type="number" value="2500" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Damar - Perabotan Rumah(OTHERS)</span>
+                        <div class="input-group">
+                            <input type="number" value="1800" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Plastik Lainnya</span>
+                        <div class="input-group">
+                            <input type="number" value="1000" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Perabotan Plastik - Wadah Plastik (PP)</span>
+                        <div class="input-group">
+                            <input type="number" value="2000" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Tutup Botol (LDPE)</span>
+                        <div class="input-group">
+                            <input type="number" value="2500" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Karung (PP)</span>
+                        <div class="input-group">
+                            <input type="number" value="1500" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+
+                    <div class="category-title" style="margin-top: 25px;">🥫 Alumunium</div>
+                    <div class="price-item">
+                        <span class="waste-name">Alma Tipis</span>
+                        <div class="input-group">
+                            <input type="number" value="12000" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Alma Tebal</span>
+                        <div class="input-group">
+                            <input type="number" value="15000" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Lis</span>
+                        <div class="input-group">
+                            <input type="number" value="10000" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Kaleng/Seng</span>
+                        <div class="input-group">
+                            <input type="number" value="8000" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Aluminium Lainnya</span>
+                        <div class="input-group">
+                            <input type="number" value="6000" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+
+                    <div class="category-title" style="margin-top: 25px;">🚧 Besi</div>
+                    <div class="price-item">
+                        <span class="waste-name">Besi Tebal</span>
+                        <div class="input-group">
+                            <input type="number" value="9500" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Besi Tipis</span>
+                        <div class="input-group">
+                            <input type="number" value="8500" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Kuningan</span>
+                        <div class="input-group">
+                            <input type="number" value="30000" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Tembaga Biasa</span>
+                        <div class="input-group">
+                            <input type="number" value="45000" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Tembaga Super</span>
+                        <div class="input-group">
+                            <input type="number" value="50000" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Timah</span>
+                        <div class="input-group">
+                            <input type="number" value="20000" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Kepala Aki</span>
+                        <div class="input-group">
+                            <input type="number" value="15000" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Aki</span>
+                        <div class="input-group">
+                            <input type="number" value="10500" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Besi Premium</span>
+                        <div class="input-group">
+                            <input type="number" value="12000" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Besi Lainnya</span>
+                        <div class="input-group">
+                            <input type="number" value="7000" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+
+                    <div class="category-title" style="margin-top: 25px;">🍾 Botol Kaca</div>
+                    <div class="price-item">
+                        <span class="waste-name">Botol Kecap</span>
+                        <div class="input-group">
+                            <input type="number" value="450" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Botol Saus</span>
+                        <div class="input-group">
+                            <input type="number" value="400" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Botol Sirup DHT</span>
+                        <div class="input-group">
+                            <input type="number" value="550" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Botol Minuman Keras Besar</span>
+                        <div class="input-group">
+                            <input type="number" value="600" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Botol Minuman Keras Kecil</span>
+                        <div class="input-group">
+                            <input type="number" value="500" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <span class="waste-name">Botol Kaca Lainnya</span>
+                        <div class="input-group">
+                            <input type="number" value="300" min="0">
+                            <span>Poin/Kg</span>
+                        </div>
+                    </div>
+
+
+                    <button type="submit" class="save-btn">Simpan Perubahan Harga</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

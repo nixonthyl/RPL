@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alamat Tersimpan - Setor.in</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #e9f5e9 0%, #d4e8d4 100%); 
+            min-height: 100vh;
+            padding: 0; 
+        }
+
+        .container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 0 16px; 
+        }
+
+        /* --- Header Halaman --- */
+        .page-header {
+            padding: 20px 0 10px 0;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e7a2e;
+            text-align: center;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-btn {
+            font-size: 24px;
+            color: #4b5563;
+            text-decoration: none;
+        }
+
+        .page-title {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .placeholder-space {
+            width: 24px; /* Untuk menyeimbangkan tombol kembali */
+        }
+
+        /* --- Address Card --- */
+        .address-card {
+            background: white;
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .address-card.default {
+            border-color: #38a169;
+        }
+
+        .address-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .address-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .address-label {
+            background: #e0f7e9;
+            color: #1e7a2e;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .address-details p {
+            font-size: 13px;
+            color: #4b5563;
+            line-height: 1.5;
+        }
+
+        .address-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: none;
+            border: 1px solid #d1d5db;
+            color: #4b5563;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .action-btn.primary {
+            background: #1e7a2e;
+            color: white;
+            border-color: #1e7a2e;
+        }
+
+        .action-btn:hover {
+            opacity: 0.9;
+        }
+        
+        /* --- Add Button --- */
+        .add-btn {
+            background: #38a169;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            width: 100%;
+            margin-top: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(56, 161, 105, 0.4);
+            transition: background 0.2s;
+        }
+        
+        .add-btn:hover {
+            background: #2d8659;
+        }
+
+        /* --- Global styles for mobile --- */
+        .main-content {
+            padding-bottom: 20px;
+        }
+        @media (max-width: 450px) {
+            .container { padding: 0; }
+            .page-header { margin: 0 16px; }
+            .address-card, .add-btn { margin-left: 16px; margin-right: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <a href="akun.html" class="back-btn">‹</a>
+            <span class="page-title">Alamat Tersimpan</span>
+            <div class="placeholder-space"></div>
+        </div>
+
+        <div class="main-content">
+            <div class="address-card default">
+                <div class="address-header">
+                    <span class="address-name">Rumah Raehan</span>
+                    <span class="address-label">Utama</span>
+                </div>
+                <div class="address-details">
+                    <p>Raehan (08123456789)</p>
+                    <p>Jl. Jendral Sudirman No. 45, Kebayoran Baru, Jakarta Selatan, DKI Jakarta 12190</p>
+                </div>
+                <div class="address-actions">
+                    <button class="action-btn" onclick="alert('Edit Alamat')">Edit</button>
+                    <button class="action-btn" onclick="alert('Hapus Alamat')">Hapus</button>
+                </div>
+            </div>
+
+            <div class="address-card">
+                <div class="address-header">
+                    <span class="address-name">Kantor Pusat</span>
+                </div>
+                <div class="address-details">
+                    <p>Bapak Hendi (0876543210)</p>
+                    <p>Gedung Setor.in Tower A, Lantai 15, Jl. Rasuna Said, Kuningan, Jakarta 12950</p>
+                </div>
+                <div class="address-actions">
+                    <button class="action-btn primary" onclick="alert('Set sebagai Utama')">Set Utama</button>
+                    <button class="action-btn" onclick="alert('Edit Alamat')">Edit</button>
+                    <button class="action-btn" onclick="alert('Hapus Alamat')">Hapus</button>
+                </div>
+            </div>
+            
+            <button class="add-btn" onclick="alert('Tambah Alamat Baru')">➕ Tambah Alamat Baru</button>
+        </div>
+    </div>
+</body>
+</html>

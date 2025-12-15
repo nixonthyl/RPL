@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tukar Hadiah & Voucher - Setor.in</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #e9f5e9 0%, #d4e8d4 100%);
+            min-height: 100vh;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .container { max-width: 500px; margin: 0 auto; padding: 0 20px; }
+        .header {
+            background: white; border-radius: 15px; padding: 15px 20px;
+            display: flex; align-items: center; gap: 15px; margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .back-btn {
+            background: #ddd; border: none; width: 40px; height: 40px;
+            border-radius: 50%; cursor: pointer; font-size: 20px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .header h1 { font-size: 20px; font-weight: bold; color: #1a1a1a; flex: 1; text-align: center; }
+
+        .points-balance {
+            background: linear-gradient(90deg, #38a169 0%, #2d8659 100%); 
+            color: white; border-radius: 12px; padding: 15px;
+            text-align: center; margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(30, 122, 46, 0.3);
+        }
+        .points-balance p { font-size: 14px; opacity: 0.8; margin-bottom: 5px; }
+        .points-balance h2 { font-size: 30px; font-weight: 700; }
+
+        .section-title {
+            font-size: 16px; color: #1f2937; font-weight: bold; margin-bottom: 15px;
+        }
+
+        .voucher-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .voucher-card {
+            background: white; border-radius: 12px; padding: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            text-align: center; cursor: pointer; transition: transform 0.2s;
+            border: 1px solid #e5e7eb;
+        }
+        .voucher-card:hover { transform: translateY(-2px); border-color: #2d8659; }
+
+        .voucher-icon { font-size: 40px; margin-bottom: 10px; }
+        .voucher-name { font-size: 14px; font-weight: 600; color: #1a1a1a; margin-bottom: 5px; }
+        .voucher-price { font-size: 16px; font-weight: bold; color: #e34c4c; }
+        .voucher-price small { font-size: 12px; font-weight: normal; color: #666; display: block; margin-top: 3px; }
+
+        /* Modal Style */
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7); display: none;
+            justify-content: center; align-items: center; z-index: 1000;
+        }
+        .modal-content {
+            background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 350px;
+            text-align: center;
+        }
+        .modal-content h3 { font-size: 18px; color: #1e7a2e; margin-bottom: 10px; }
+        .modal-content p { font-size: 14px; color: #4b5563; margin-bottom: 20px; }
+        .modal-btn-confirm {
+            background: #2d8659; color: white; padding: 12px; border: none; border-radius: 8px;
+            width: 100%; font-weight: bold; cursor: pointer; margin-bottom: 10px;
+        }
+        .modal-btn-cancel {
+            background: #f3f4f6; color: #4b5563; padding: 12px; border: none; border-radius: 8px;
+            width: 100%; font-weight: bold; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="back-btn" onclick="window.location.href='redeem.html'">←</button>
+            <h1>Tukar Hadiah & Voucher</h1>
+        </div>
+
+        <div class="points-balance">
+            <p>Saldo Setor.in Points Anda:</p>
+            <h2>500.000</h2>
+        </div>
+
+        <div class="section-title">Pilih Voucher Penukaran</div>
+
+        <div class="voucher-grid">
+            
+            <div class="voucher-card" onclick="openRedeemModal('Voucher Kopi ' + 'Starbucks', 30000)">
+                <div class="voucher-icon">☕</div>
+                <div class="voucher-name">Voucher Kopi Starbucks</div>
+                <div class="voucher-price">30.000 <small>Points</small></div>
+            </div>
+
+            <div class="voucher-card" onclick="openRedeemModal('Pulsa 25K ' + 'Telkomsel', 25000)">
+                <div class="voucher-icon">📞</div>
+                <div class="voucher-name">Pulsa Telkomsel</div>
+                <div class="voucher-price">25.000 <small>Points</small></div>
+            </div>
+
+            <div class="voucher-card" onclick="openRedeemModal('Diskon Baju ' + 'Uniqlo (Rp 50K)', 50000)">
+                <div class="voucher-icon">👕</div>
+                <div class="voucher-name">Diskon Baju Uniqlo</div>
+                <div class="voucher-price">50.000 <small>Points</small></div>
+            </div>
+
+            <div class="voucher-card" onclick="openRedeemModal('Voucher Toko Elektronik', 40000)">
+                <div class="voucher-icon">💻</div>
+                <div class="voucher-name">Voucher Toko Elektronik</div>
+                <div class="voucher-price">40.000 <small>Points</small></div>
+            </div>
+
+        </div>
+    </div>
+    
+    <div id="redeemModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalVoucherName"></h3>
+            <p>Anda yakin ingin menukarkan <strong id="modalVoucherPoints"></strong> Points untuk item ini?</p>
+            <button class="modal-btn-confirm" onclick="confirmRedeem()">TUKAR SEKARANG</button>
+            <button class="modal-btn-cancel" onclick="closeRedeemModal()">BATAL</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedVoucher = {};
+
+        function formatNumber(num) {
+            if (num === undefined || num === null || isNaN(num)) return '0';
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+        
+        function openRedeemModal(name, points) {
+            selectedVoucher = { name, points };
+            document.getElementById('modalVoucherName').textContent = name;
+            document.getElementById('modalVoucherPoints').textContent = formatNumber(points);
+            document.getElementById('redeemModal').style.display = 'flex';
+        }
+
+        function closeRedeemModal() {
+            document.getElementById('redeemModal').style.display = 'none';
+        }
+
+        function confirmRedeem() {
+            const currentPoints = 500000; // Saldo fiktif
+            
+            if (selectedVoucher.points > currentPoints) {
+                alert(`Gagal! Saldo Points Anda tidak mencukupi untuk menukarkan ${selectedVoucher.name}.`);
+                closeRedeemModal();
+                return;
+            }
+
+            alert(`Selamat! Anda berhasil menukarkan ${formatNumber(selectedVoucher.points)} Points dengan ${selectedVoucher.name}. Detail voucher akan dikirimkan ke email Anda.`);
+            closeRedeemModal();
+            
+            // Redirect ke dashboard.html sesuai permintaan
+            window.location.href = 'dashboard.html';
+        }
+
+        // Close modal on background click
+        document.getElementById('redeemModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeRedeemModal();
+            }
+        });
+    </script>
+</body>
+</html>

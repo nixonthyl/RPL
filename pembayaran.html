@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setor.in - Pembayaran</title>
+    <style>
+        /* ... (CSS tetap sama, pastikan .item-row styling sesuai permintaan) ... */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #7fd8be 0%, #5db39a 100%);
+            min-height: 100vh;
+            padding-top: 20px;
+            padding-bottom: 80px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-btn {
+            background: #ddd;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            font-weight: bold;
+            color: #1a1a1a;
+            flex: 1;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .section-title {
+            background: #2d8659;
+            color: white;
+            padding: 12px 15px;
+            font-weight: bold;
+        }
+
+        .section-content {
+            padding: 15px;
+        }
+
+        .item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0; /* Padding lebih kecil */
+            border-bottom: 1px dashed #f0f0f0; /* Garis putus-putus */
+            font-size: 14px;
+        }
+
+        .item-row:last-child {
+            border-bottom: none;
+        }
+
+        .item-label {
+            color: #1a1a1a;
+            flex: 2;
+        }
+        
+        .item-row .qty-value {
+             text-align: right; 
+             color: #666;
+             flex: 1;
+        }
+
+        .item-row .point-value {
+             text-align: right; 
+             color: #2d8659;
+             font-weight: bold;
+             flex: 2;
+        }
+
+
+        .item-row.total {
+            font-weight: bold;
+            color: #1a1a1a;
+            border-top: 2px solid #f0f0f0;
+            padding-top: 15px;
+        }
+
+        .item-row.total .item-value {
+            color: #2d8659;
+            font-size: 16px;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-icon {
+            font-size: 20px;
+        }
+
+        .info-text {
+            flex: 1;
+        }
+
+        .info-text strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #1a1a1a;
+        }
+
+        .info-text p {
+            color: #999;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border: 2px solid #f0f0f0;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+
+        .payment-method:hover {
+            border-color: #2d8659;
+            background: #f9fff7;
+        }
+
+        .payment-method.active {
+            border-color: #2d8659;
+            background: #f0fef8;
+        }
+
+        .payment-icon {
+            font-size: 24px;
+        }
+
+        .payment-name {
+            flex: 1;
+            font-weight: 500;
+            color: #1a1a1a;
+        }
+
+        .checkbox-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #2d8659;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .checkbox-radio.checked {
+            background: #2d8659;
+            color: white;
+            font-size: 12px;
+        }
+
+        .footer-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            max-width: 460px;
+            margin: 0 auto;
+            background: #2d8659;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .footer-btn:hover {
+            background: #1f5c40;
+        }
+
+        /* Grouped Payment Methods */
+        .payment-group-title {
+            font-size: 12px;
+            color: #4b5563;
+            margin: 15px 0 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="back-btn" onclick="window.history.back()">←</button>
+            <h1>Pembayaran Drop Off</h1>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Informasi Sampah</div>
+            <div class="section-content">
+                <div id="item-list-container">
+                    </div>
+                
+                <div class="item-row total">
+                    <div class="item-label">Estimasi Total Poin Yang Didapat</div>
+                    <div class="item-value" id="totalEstimasiPoin">0 Poin</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Informasi Penjemputan</div>
+            <div class="section-content">
+                <div class="info-item">
+                    <div class="info-icon">📞</div>
+                    <div class="info-text">
+                        <strong id="pickupPhone">0812xxxxxx</strong>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">📍</div>
+                    <div class="info-text">
+                        <strong id="pickupAddress">Alamat Penjemputan</strong>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">📝</div>
+                    <div class="info-text">
+                        <strong>Catatan</strong>
+                        <p id="pickupNotes">Tidak ada catatan</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">🚚</div>
+                    <div class="info-text">
+                        <strong>Biaya Jemput Sampah</strong>
+                        <p id="pickupFee" style="color: #e34c4c; font-weight: bold;">Rp 20.000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Metode Pembayaran Biaya Jemput (Rp 20.000)</div>
+            <div class="section-content">
+                
+                <div class="payment-group-title">QRIS</div>
+                <div class="payment-method" onclick="selectPayment(this, 'QRIS')">
+                    <div class="payment-icon">📱</div>
+                    <div class="payment-name">QRIS (Semua Pembayaran)</div>
+                    <div class="checkbox-radio"></div>
+                </div>
+
+                <div class="payment-group-title">E-Wallet</div>
+                <div class="payment-method" onclick="selectPayment(this, 'GoPay')">
+                    <div class="payment-icon">💳</div>
+                    <div class="payment-name">GoPay</div>
+                    <div class="checkbox-radio"></div>
+                </div>
+                <div class="payment-method" onclick="selectPayment(this, 'Ovo')">
+                    <div class="payment-icon">🟣</div>
+                    <div class="payment-name">OVO</div>
+                    <div class="checkbox-radio"></div>
+                </div>
+                <div class="payment-method" onclick="selectPayment(this, 'ShopeePay')">
+                    <div class="payment-icon">🧡</div>
+                    <div class="payment-name">ShopeePay</div>
+                    <div class="checkbox-radio"></div>
+                </div>
+                
+                <div class="payment-group-title">Virtual Account</div>
+                <div class="payment-method" onclick="selectPayment(this, 'VA-BCA')">
+                    <div class="payment-icon">🏦</div>
+                    <div class="payment-name">BCA Virtual Account</div>
+                    <div class="checkbox-radio"></div>
+                </div>
+                <div class="payment-method" onclick="selectPayment(this, 'VA-Mandiri')">
+                    <div class="payment-icon">🏦</div>
+                    <div class="payment-name">Mandiri Virtual Account</div>
+                    <div class="checkbox-radio"></div>
+                </div>
+                
+                <div class="payment-group-title">Gerai Retail</div>
+                <div class="payment-method" onclick="selectPayment(this, 'Retail-Alfamart')">
+                    <div class="payment-icon">🏪</div>
+                    <div class="payment-name">Alfamart</div>
+                    <div class="checkbox-radio"></div>
+                </div>
+                <div class="payment-method" onclick="selectPayment(this, 'Retail-Indomaret')">
+                    <div class="payment-icon">🏪</div>
+                    <div class="payment-name">Indomaret</div>
+                    <div class="checkbox-radio"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="footer-btn" onclick="processOrder()">PESAN JEMPUT & BAYAR</button>
+
+    <script>
+        let selectedPayment = null;
+        let transactionData = null;
+        const FIXED_FEE = 20000;
+        
+        function formatNumber(num) {
+            if (num === undefined || num === null || isNaN(num)) return '0';
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        function loadTransactionData() {
+            const data = localStorage.getItem('dropOffTransaction');
+            if (!data) {
+                alert('Data transaksi tidak ditemukan. Silakan ulangi Drop Off.');
+                window.location.href = 'drop-off.html';
+                return;
+            }
+            transactionData = JSON.parse(data);
+            renderTransactionDetails();
+        }
+
+        function renderTransactionDetails() {
+            if (!transactionData) return;
+
+            // 1. Informasi Sampah
+            const itemList = document.getElementById('item-list-container');
+            itemList.innerHTML = '';
+            
+            transactionData.items.forEach(item => {
+                const row = document.createElement('div');
+                row.className = 'item-row';
+                row.innerHTML = `
+                    <div class="item-label">${item.item}</div>
+                    <div class="qty-value">${item.qty} ${item.unit}</div>
+                    <div class="point-value">${formatNumber(item.estimasiPoin)} Poin</div>
+                `;
+                itemList.appendChild(row);
+            });
+            
+            document.getElementById('totalEstimasiPoin').textContent = formatNumber(transactionData.info.totalEstimasiPoin) + ' Poin';
+
+            // 2. Informasi Penjemputan
+            document.getElementById('pickupPhone').textContent = transactionData.info.phone;
+            document.getElementById('pickupAddress').textContent = transactionData.info.address;
+            document.getElementById('pickupNotes').textContent = transactionData.info.notes || 'Tidak ada catatan';
+        }
+
+        function selectPayment(el, method) {
+            document.querySelectorAll('.payment-method').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.checkbox-radio').classList.remove('checked');
+            });
+            el.classList.add('active');
+            el.querySelector('.checkbox-radio').classList.add('checked');
+            selectedPayment = method;
+        }
+
+        function processOrder() {
+            if (!selectedPayment) {
+                alert('Silakan pilih metode pembayaran biaya jemput (Rp 20.000)');
+                return;
+            }
+            
+            // --- STEP 1: Mengarahkan ke halaman detail pembayaran biaya jemput ---
+            // Mengarahkan ke halaman FEE PAYMENT DETAIL yang baru, membawa metode yang dipilih
+            window.location.href = `fee-payment-detail.html?method=${selectedPayment}`;
+        }
+        
+        document.addEventListener('DOMContentLoaded', loadTransactionData);
+    </script>
+</body>
+</html>

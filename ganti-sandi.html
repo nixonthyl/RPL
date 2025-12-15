@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ganti Kata Sandi - Setor.in</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #e9f5e9 0%, #d4e8d4 100%); 
+            min-height: 100vh;
+            padding: 0; 
+        }
+
+        .container {
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 0 16px; 
+        }
+
+        /* --- Header Halaman --- */
+        .page-header {
+            padding: 20px 0 10px 0;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e7a2e;
+            text-align: center;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .back-btn {
+            font-size: 24px;
+            color: #4b5563;
+            text-decoration: none;
+            margin-right: 40px;
+        }
+
+        .page-title {
+            flex-grow: 1;
+            text-align: center;
+            margin-left: -39px; /* Menyesuaikan agar judul tetap di tengah */
+        }
+        
+        /* --- Form Style --- */
+        .form-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-card p {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #4b5563;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #38a169;
+        }
+
+        .submit-btn {
+            background: #38a169;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 700;
+            width: 100%;
+            margin-top: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(56, 161, 105, 0.4);
+            transition: background 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: #2d8659;
+        }
+
+        /* --- Global styles for mobile --- */
+        @media (max-width: 450px) {
+            .container { padding: 0; }
+            .page-header { margin: 0 16px; }
+            .form-card { margin-left: 16px; margin-right: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <a href="akun.html" class="back-btn">‹</a>
+            <span class="page-title">Ganti Kata Sandi</span>
+        </div>
+
+        <div class="main-content">
+            <div class="form-card">
+                <p>Jaga keamanan akun Anda dengan mengganti kata sandi secara berkala.</p>
+                <form onsubmit="event.preventDefault(); alert('Kata Sandi Berhasil Diganti!')">
+                    <div class="form-group">
+                        <label for="old-password">Kata Sandi Lama</label>
+                        <input type="password" id="old-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="new-password">Kata Sandi Baru</label>
+                        <input type="password" id="new-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Konfirmasi Kata Sandi Baru</label>
+                        <input type="password" id="confirm-password" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Simpan Kata Sandi Baru</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
